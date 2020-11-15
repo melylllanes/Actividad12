@@ -46,7 +46,7 @@ public class Actividad12 {
                     AddressBook.create(telefono, nombre);
                     System.out.println("-----------------------------------------------------------");
                     AddressBook.load();
-                    //AddressBook.save();
+                    AddressBook.save();
 
                     break;
                 case "3":
@@ -55,7 +55,7 @@ public class Actividad12 {
                     AddressBook.delete(telefono);
                     System.out.println("-----------------------------------------------------------");
                     AddressBook.load();
-                    //AddressBook.save();
+                    AddressBook.save();
 
                     break;
                 case "0":

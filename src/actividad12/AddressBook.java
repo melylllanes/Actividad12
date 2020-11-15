@@ -6,30 +6,18 @@
 package actividad12;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
-import java.io.Writer;
+import java.io.PrintWriter;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JFileChooser;
 
 /**
  *
  * @author melissa.a.lopez
  */
-public class AddressBook implements Serializable {
+public class AddressBook {
 
     static HashMap<String, String> contacto = new HashMap<>();
 
@@ -68,53 +56,52 @@ public class AddressBook implements Serializable {
         return contacto;
     }
 
-    public static void load() throws IOException {
+    public static void load() {
+
+        FileReader fr = null;
+        BufferedReader br = null;
 
         try {
-            FileOutputStream fileOutputStream = new FileOutputStream(file);
-            ObjectOutputStream objectOutputStream
-                    = new ObjectOutputStream(fileOutputStream);
+            fr = new FileReader(file);
+            br = new BufferedReader(fr);
 
-            objectOutputStream.writeObject(contacto);
-
-            fileOutputStream.close();
-            objectOutputStream.close();
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                System.out.println(linea);
+            }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println(e);
+        } finally {
+
+            try {
+                if (null != fr) {
+                    fr.close();
+                }
+            } catch (IOException e2) {
+                System.out.println(e2);
+            }
         }
 
     }
 
-//String eol = System.getProperty("line.separator");
+    public static void save() throws IOException {
 
-    /*try (Writer writer = new FileWriter(file,true)) {
-            //BufferedWriter bw = new BufferedWriter(writer);
+        String eol = System.getProperty("line.separator");
 
-            for (Map.Entry<String, String> entry : contacto.entrySet()) {
-                writer.append(entry.getKey())
+        try (FileWriter writer = new FileWriter(file)) {
+            PrintWriter pw = new PrintWriter(writer);
+
+            contacto.entrySet().forEach((entry) -> {
+                pw.append(entry.getKey())
                         .append(',')
                         .append(entry.getValue())
                         .append(eol);
+            });
 
-              
-            }
-
-           // bw.close();
             writer.close();
         } catch (IOException ex) {
             ex.printStackTrace(System.err);
-        }*/
-    public static void save() throws IOException {
-
-        /*try {
-            FileWriter fw = new FileWriter(file);
-            BufferedWriter bw = new BufferedWriter(fw);
-            bw.close();
-            fw.close();
-        } catch (Exception e) {
-            System.out.println(e);
-            
-        }*/
+        }
     }
 
 }
